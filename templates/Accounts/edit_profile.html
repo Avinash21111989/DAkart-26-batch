@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block mainContent %}
+
+<section class="section-conten padding-y bg">
+
+    <div class="container">
+        <div class="row">
+        <aside class="col-md-3">
+           
+            <!--   SIDEBAR   -->
+            {% include 'includes/sidebar.html '%}
+            <br>
+            <a class="btn btn-light btn-block" href="#"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+            <!--   SIDEBAR .//END   -->
+        </aside>
+        <main class="col-md-9">
+            {% include 'includes/alerts.html '%}
+            <article class="card">
+                
+            <div class="card-body">
+                <img src="{{ user_profile.profile_picture.url }}" width="100" height="100">
+            </div> <!-- card-body .// -->
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{% url 'editProfile' %}" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                    
+                        {% csrf_token %}
+                        <div class="form-group col-md-6"> 
+                            <label> First Name </label>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label> Last Name </label>
+                            {{ user_form.last_name }}
+                        </div>
+                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label> Profile Picture </label>
+                        {{ user_profile_form.profile_picture }}
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label> City </label>
+                        {{ user_profile_form.city }}
+                    </div>
+                   
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label> Address line 1 </label>
+                        {{ user_profile_form.address_line_1 }}
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label> Address line 2 </label>
+                        {{ user_profile_form.address_line_2 }}
+                    </div>
+                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label> State </label>
+                        {{ user_profile_form.state }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label> Country </label>
+                        {{ user_profile_form.country }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label> Zipcode </label>
+                        {{ user_profile_form.zipcode }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label> Phone no. </label>
+                        {{ user_profile_form.phoneno }}
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary">
+            </form>
+                </div>
+            </div>
+            </article> <!-- order-group.// --> 
+        </main>
+    </div> <!-- row.// -->
+    </div>
+    
+    
+    </section>
+{% endblock %}

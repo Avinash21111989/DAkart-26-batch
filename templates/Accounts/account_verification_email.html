@@ -1,0 +1,8 @@
+{% autoescape off %}
+
+Hi {{ user.username }}
+
+Thanks for registering with us. To confirm your identity, Please click on below Link.
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}
