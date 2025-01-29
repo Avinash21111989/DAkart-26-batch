@@ -9,8 +9,9 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name="dashboard"),
     path('editProfile/', views.editProfile, name="editProfile"),
     path('changePassword/', views.changePassword, name="changePassword"),
-    path('myOrders/', views.myOrders, name="myOrders"),
+    path('myOrders/', views.my_orders, name="myOrders"),
     path('activate/<uidb64>/<token>', views.activate, name = "activate"),
+    path('order_detail/<int:order_number>',views.order_detail,name="order_detail"),
     
    
    

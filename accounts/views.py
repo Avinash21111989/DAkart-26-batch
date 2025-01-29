@@ -13,6 +13,7 @@ from . models import UserProfile
 from django.contrib.auth.decorators import login_required
 from carts.models import Cart,CartItem
 from carts.views import cart_id
+from orders.models import payment,OrderProduct,Order
 
 # Create your views here.
 def register(request):
@@ -142,7 +143,14 @@ def activate(request,uidb64, token):
         
 @login_required(login_url= 'login')
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    
+    orders = Order.objects.filter(user = request.user, is_ordered= True)
+    OrdersCount = orders.count()
+    context = {
+        
+        'OrdersCount': OrdersCount
+    }
+    return render(request,'accounts/dashboard.html',context)
 
 @login_required(login_url= 'login')        
 def editProfile(request):
@@ -201,5 +209,29 @@ def changePassword(request):
             messages.warning(request,"New password and confirm password not matching")
     return render(request,'accounts/change_password.html')
 
-def myOrders(request):
-    return render(request,'accounts/edit_profile.html')
+@login_required(login_url= 'login')
+def my_orders(request):
+    Orders = Order.objects.filter(user= request.user,is_ordered= True)
+    context = {
+       'Orders':Orders
+
+    }
+
+    return render (request,'accounts/my_orders.html',context)
+
+@login_required(login_url= 'login')
+def order_detail(request,order_number):
+    order_detail = OrderProduct.objects.filter(order__order_number = order_number)
+    print("order details", order_number)
+    order = Order.objects.get(order_number = order_number)
+    subtotal = 0
+    for i in order_detail:
+        subtotal += i.product_price * i.quantity
+    
+    context = {
+        'order_detail':order_detail,
+        'subtotal':subtotal,
+        'order':order
+    }
+
+    return render(request,'accounts/order_detail.html',context)
