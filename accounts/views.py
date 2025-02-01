@@ -81,6 +81,7 @@ def register(request):
 
 def user_login(request):
     print("login details", request.POST)
+    is_cart_item_exists = False
     if request.method == 'POST':
         entered_username = request.POST['username']
         enetred_password  = request.POST['password']
@@ -223,6 +224,7 @@ def my_orders(request):
 def order_detail(request,order_number):
     order_detail = OrderProduct.objects.filter(order__order_number = order_number)
     print("order details", order_number)
+    print(order_detail.query)
     order = Order.objects.get(order_number = order_number)
     subtotal = 0
     for i in order_detail:
